@@ -57,7 +57,7 @@ var getUnanswered = function(tags) {
 		order: 'desc',
 		sort: 'creation'
 	};
-	
+	//Returns deferred object
 	$.ajax({
 		url: "http://api.stackexchange.com/2.2/questions/unanswered",
 		data: request,
@@ -66,7 +66,6 @@ var getUnanswered = function(tags) {
 	})
 	.done(function(result){ //this waits for the ajax to return with a succesful promise object
 		var searchResults = showSearchResults(request.tagged, result.items.length);
-
 		$('.search-results').html(searchResults);
 		//$.each is a higher order function. It takes an array and a function as an argument.
 		//The function is executed once for each item in the array.
@@ -81,6 +80,36 @@ var getUnanswered = function(tags) {
 	});
 };
 
+var getTopAnswerers = function(answerers) {
+	// Parameters we need to pass in our request to StackOverflow's API
+	var request = {
+		site: 'stackoverflow',
+	}
+
+	$.ajax({
+		url: "http://api.stackexchange.com/2.2/tags/" + answerers + "/top-answerers/all_time" ,
+		data: request,
+		dataType: "jsonp",
+		type: "GET",
+	})
+	.done(function(result){
+		var searchResults = showSearchResults(answerers, result.items.length);
+		//Need selector as to where to display search results
+		$('').html(searchResults);
+		$.each(result.items, function(index, value) {
+			//Need to define showAnswerer function
+			var answerer = showAnswerer(value);
+		 	//need a place to show answerer
+		 	$('').append(answerer);
+		})
+	})
+	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
+		// var errorElem = showError(error);
+		// $('.search-results').append(errorElem);
+	});
+
+}
+
 
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(e){
@@ -90,5 +119,14 @@ $(document).ready( function() {
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
+	});
+	$('.inspiration-getter').submit(function(e){
+		e.preventDefault();
+		//Clear results container
+
+		//Get the value of the answerers the user submitted
+		var answerers = $(this).find("input[name='answerers']").val();
+		//Send API request
+		getTopAnswerers(answerers);
 	});
 });
