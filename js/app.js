@@ -141,6 +141,7 @@ $(document).ready( function() {
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
+		$("input[name='tags']").val('');
 		showUnansweredBox();
 	});
 	$('.inspiration-getter').submit(function(e){
@@ -151,6 +152,7 @@ $(document).ready( function() {
 		var answerers = $(this).find("input[name='answerers']").val();
 		//Send API request
 		getTopAnswerers(answerers);
+		$("input[name='answerers']").val('');
 		showAnswererBox();
 	});
 	$('#unanswered-view').click(function(){
