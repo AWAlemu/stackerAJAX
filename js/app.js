@@ -84,7 +84,7 @@ var getUnanswered = function(tags) {
 	};
 	//Returns deferred object
 	$.ajax({
-		url: "http://api.stackexchange.com/2.2/questions/unanswered",
+		url: "https://api.stackexchange.com/2.2/questions/unanswered",
 		data: request,
 		dataType: "jsonp",//use jsonp to avoid cross origin issues
 		type: "GET",
@@ -112,7 +112,7 @@ var getTopAnswerers = function(answerers) {
 	}
 
 	$.ajax({
-		url: "http://api.stackexchange.com/2.2/tags/" + answerers + "/top-answerers/all_time" ,
+		url: "https://api.stackexchange.com/2.2/tags/" + answerers + "/top-answerers/all_time" ,
 		data: request,
 		dataType: "jsonp",
 		type: "GET",
