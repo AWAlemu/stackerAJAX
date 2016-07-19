@@ -33,7 +33,6 @@ var showQuestion = function(question) {
 
 var showAnswerer = function(answerer) {
 
-	console.log(answerer);
 	var result = $('.templates .answerer').clone();
 
 	var imageElem = result.find('.image img');
