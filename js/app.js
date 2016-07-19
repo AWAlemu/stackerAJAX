@@ -31,6 +31,31 @@ var showQuestion = function(question) {
 	return result;
 };
 
+var showAnswerer = function(answerer) {
+
+	console.log(answerer);
+	var result = $('.templates .answerer').clone();
+
+	var imageElem = result.find('.image img');
+	imageElem.attr('src', answerer.user.profile_image);
+
+	var linkElem = result.find('.image a');
+	linkElem.attr('href', answerer.user.link);
+
+	var reputationElem = result.find('.reputation span');
+	reputationElem.text(answerer.user.reputation);
+
+	var nameElem = result.find('.name');
+	nameElem.text(answerer.user.display_name);
+
+	var scoreElem = result.find('.score');
+	scoreElem.text(answerer.score);
+
+	var postsElem = result.find('.posts');
+	postsElem.text(answerer.post_count);
+
+	return result;
+};
 
 // this function takes the results object from StackOverflow
 // and returns the number of results and tags to be appended to DOM
@@ -94,39 +119,58 @@ var getTopAnswerers = function(answerers) {
 	})
 	.done(function(result){
 		var searchResults = showSearchResults(answerers, result.items.length);
-		//Need selector as to where to display search results
-		$('').html(searchResults);
+		$('.answerer-search-results').html(searchResults);
 		$.each(result.items, function(index, value) {
-			//Need to define showAnswerer function
 			var answerer = showAnswerer(value);
-		 	//need a place to show answerer
-		 	$('').append(answerer);
+		 	$('.answerer-results').append(answerer);
 		})
 	})
 	.fail(function(jqXHR, error){ //this waits for the ajax to return with an error promise object
-		// var errorElem = showError(error);
-		// $('.search-results').append(errorElem);
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
 	});
 
 }
-
 
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(e){
 		e.preventDefault();
 		// zero out results if previous search has run
+		$('.result-view').show();
 		$('.results').html('');
 		// get the value of the tags the user submitted
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
+		showUnansweredBox();
 	});
 	$('.inspiration-getter').submit(function(e){
 		e.preventDefault();
-		//Clear results container
-
+		$('.result-view').show();
+		$('.answerer-results').html('');
 		//Get the value of the answerers the user submitted
 		var answerers = $(this).find("input[name='answerers']").val();
 		//Send API request
 		getTopAnswerers(answerers);
+		showAnswererBox();
+	});
+	$('#unanswered-view').click(function(){
+		showUnansweredBox();
+	});
+	$('#answerers-view').click(function(){
+		showAnswererBox();
 	});
 });
+
+var showAnswererBox = function() {
+	$('.results-container').hide();
+	$('.answerer-container').show();
+	$('#answerers-view').css('background-color', "#9999ff");
+	$('#unanswered-view').css('background-color', "#e6e6ff");
+}
+
+var showUnansweredBox = function() {
+	$('.answerer-container').hide();
+	$('.results-container').show();
+	$('#answerers-view').css('background-color', "#e6e6ff");
+	$('#unanswered-view').css('background-color', "#9999ff");
+}
