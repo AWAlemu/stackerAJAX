@@ -29,9 +29,19 @@
 				<input type="submit" value="Submit">
 			</form>
 		</div>
+		<hr>
+		<div class="result-view">
+			<div id="unanswered-view"><h4>Unanswered Questions</h4></div>
+			<div id="answerers-view"><h4>Top Answerers</h4></div>
+			<hr>
+		</div>	
 		<div class="results-container">
 			<div class="search-results"></div>
 			<div class="results"></div>
+		</div>
+		<div class="answerer-container">
+			<div class="answerer-search-results"></div>
+			<div class="answerer-results"></div>
 		</div>
 	</div>
 	<div class="templates hidden">
@@ -44,6 +54,23 @@
 				<dd class="viewed"></dd>
 			<dt>Asker</dt>
 				<dd class="asker"></dd>
+		</dl>
+		
+		<dl class="result answerer">
+			<div class="user">
+				<div class="img-reputation">
+					<div class="image">
+						<a href="" target="_blank"><img src=""/></a>
+					</div>
+					<div class="reputation"><p><span class="rptn"></span> Reputation</p></div>
+				</div>
+				<div class="user-info">
+					<h3 class="name"> </h3>
+					<p>Posts <span class="posts"></span></p>
+					<p>Score <span class="score"></span></p>
+
+				</div>
+			</div>
 		</dl>
 		<div class="error">
 			<p>Uh-oh! Something went wrong with your request. Here's what we know:</p>
